@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addPost, updatePost } from '../redux/reducers/blogReducer';
 import { useNavigate } from 'react-router-dom';
 import {debounce} from 'lodash'
-import PostForm from './PostForm';
+import PostForm from './postForm';
 
 const AddPost = () => {
   const dispatch = useDispatch();
