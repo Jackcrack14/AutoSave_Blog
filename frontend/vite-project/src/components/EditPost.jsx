@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updatePost } from '../redux/reducers/blogReducer';
 import { useNavigate, useParams } from 'react-router-dom';
 import { debounce } from 'lodash';
-import PostForm from './PostForm';
+import PostForm from './postForm';
 
 const EditPost = () => {
   const dispatch = useDispatch();
