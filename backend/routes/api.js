@@ -1,10 +1,10 @@
 const express = require('express')
 const router = express.Router()
-const {createBlog, allPosts, getPost, updatePost, deletePost} = require('../controllers/blogController')
-const protect = require('../middleware/authMiddleware')
+const {createPost, allPosts, getPost, updatePost, deletePost} = require('../controllers/blogController')
+const {protect} = require('../middleware/authMiddleware')
 
 
-router.route('/create').post(protect,createBlog);
+router.route('/create').post(protect,createPost);
   
 router.route('/read').get(allPosts);
 

@@ -6,7 +6,7 @@ const createPost = async (req,res) => {
     console.log('Received data:', title, content);
     if (title !== undefined && title !== null && title !== ''){
 
-      const newPost = new BlogPost({ title, content });
+      const newPost = new BlogPost({ title, content, owner:req.user._id });
       try {
         await newPost.save();
         console.log('Post saved:', newPost);
@@ -49,11 +49,12 @@ const updatePost = async (req, res) => {
     const { id } = req.params;
     console.log(req.body)
     try {
-      const updatedPost = await BlogPost.findByIdAndUpdate(
-        id,
-        { title, content },
-        { new: true }
-      );
+      const user = req.user._id
+      const post = await BlogPost.findById(id);
+      if (user === post.owner){
+        const updatedPost = await findByIdAndupdate(id,
+          {title, content})
+      } 
   
       if (!updatedPost) {
         return res.status(404).send('Post not found');
@@ -68,7 +69,7 @@ const updatePost = async (req, res) => {
   }
 
 const deletePost = async (req, res) => {
-    const { id } = req.params;
+    const { id,owner } = req.params;
     try {
         const deletedPost = await BlogPost.findByIdAndDelete(id);
         if (!deletedPost) {
