@@ -39,7 +39,7 @@ const AddPost = () => {
 
   const saveNewPost = async (formData) => {
     try {
-      const response = await fetch('http://localhost:5000/create', {
+      const response = await fetch('http://localhost:5000/blogs/create', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ const AddPost = () => {
 
   const updateExistingPost = async (postId, formData) => {
     try {
-      const response = await fetch(`http://localhost:5000/update/${postId}`, {
+      const response = await fetch(`http://localhost:5000/blogs/update/${postId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

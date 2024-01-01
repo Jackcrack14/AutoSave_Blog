@@ -50,15 +50,17 @@ const updatePost = async (req, res) => {
     console.log(req.body)
     try {
       const user = req.user._id
-      const post = await BlogPost.findById(id);
-      if (user === post.owner){
+      const post_owner = await BlogPost.findById(id).populate('owner',{_id: 1});
+      if (user === post_owner){
         const updatedPost = await findByIdAndupdate(id,
           {title, content})
+
+          if (!updatedPost) {
+            return res.status(404).send('Post not found');
+          }
       } 
   
-      if (!updatedPost) {
-        return res.status(404).send('Post not found');
-      }
+      
   
       res.send(updatedPost);
     } catch (error) {
@@ -69,12 +71,17 @@ const updatePost = async (req, res) => {
   }
 
 const deletePost = async (req, res) => {
-    const { id,owner } = req.params;
+    const { id} = req.params;
     try {
-        const deletedPost = await BlogPost.findByIdAndDelete(id);
+      const user = req.user._id
+      const post_owner = await BlogPost.findById(id).populate('owner',{_id: 1});
+      if (user === post_owner){
+        const deletedPost = await BlogPost.findByIdAndDelete(id)
         if (!deletedPost) {
-            return res.status(404).send("Post not found");
-        }
+          return res.status(404).send("Post not found");
+      }
+      };
+        
         res.send("Deleted Successfully");
     } catch (error) {
         console.error("Error deleting post:", error);

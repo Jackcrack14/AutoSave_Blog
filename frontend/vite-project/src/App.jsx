@@ -18,7 +18,7 @@ const App = () => {
     // Fetch initial posts from the backend
     const fetchPosts = async () => {
       try {
-        const response = await fetch('http://localhost:5000/read');
+        const response = await fetch('http://localhost:5000/blogs/read');
         const data = await response.json();
         dispatch(setPosts(data));
       } catch (error) {

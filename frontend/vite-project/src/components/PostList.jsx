@@ -11,7 +11,7 @@ const PostList = ({ posts }) => {
     console.log(postId)
     try {
       dispatch(deletePost(postId))
-      const response = await fetch(`http://localhost:5000/delete/${postId}`, {
+      const response = await fetch(`http://localhost:5000/blogs/delete/${postId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
