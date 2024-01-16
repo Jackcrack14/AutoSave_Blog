@@ -9,6 +9,8 @@ const blogSlice = createSlice({
     reducers: {
         setPosts: (state, action) => {
             state.posts = action.payload
+            const post = JSON.stringify(state.posts)
+            localStorage.setItem('posts', post)
         },
         addPost: (state, action) => {
             // Check if action.payload is not empty before pushing

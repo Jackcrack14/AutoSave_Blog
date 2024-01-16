@@ -11,16 +11,18 @@ const EditPost = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const posts = useSelector((state) => state.blog.posts);
+  const user  = useSelector((state) => state.auth.user);
   const post = posts.find((p) => p._id === id);
   const [formData, setFormData] = useState(post);
-  console.log(post)
-  console.log(formData)
+  // console.log(post)
+  // console.log(formData)
   const handleSave = async (formData) => {
     console.log('Handle Save:', formData);
     try {
       const response = await fetch(`http://localhost:5000/blogs/update/${id}`, {
         method: 'PUT',
         headers: {
+          'Authorization':`Bearer ${user.token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify(formData),
@@ -59,11 +61,15 @@ const EditPost = () => {
       debouncedSave.cancel();
     };
   }, [debouncedSave]);
+  const handleLogout = () => {
+    navigate('/login')
+  }
 
   return (
     <div className="container">
       <h1>Edit Post</h1>
       <PostForm formData={formData} onInputChange={handleInputChange} onSave={debouncedSave} />
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };

@@ -23,7 +23,7 @@ const createPost = async (req,res) => {
 const allPosts = async (req,res) => {
     try {
         const posts = await BlogPost.find();
-        console.log('Retrieved posts:', posts);
+        // console.log('Retrieved posts:', posts);
     
         res.send(posts);
       } catch (error) {
@@ -47,12 +47,14 @@ const getPost = async (req, res) => {
 const updatePost = async (req, res) => {
     const { title, content } = req.body;
     const { id } = req.params;
-    console.log(req.body)
+    // console.log(req.body)
     try {
+      let updatedPost
       const user = req.user._id
-      const post_owner = await BlogPost.findById(id).populate('owner',{_id: 1});
-      if (user === post_owner){
-        const updatedPost = await findByIdAndupdate(id,
+      const post_owner = await BlogPost.findById(id).select('owner');
+      console.log(post_owner)
+      if (user.toString() === post_owner.owner[0]._id.toString()){
+        updatedPost = await BlogPost.findByIdAndUpdate(id,
           {title, content})
 
           if (!updatedPost) {
@@ -74,15 +76,19 @@ const deletePost = async (req, res) => {
     const { id} = req.params;
     try {
       const user = req.user._id
-      const post_owner = await BlogPost.findById(id).populate('owner',{_id: 1});
-      if (user === post_owner){
-        const deletedPost = await BlogPost.findByIdAndDelete(id)
+      const post_owner = await BlogPost.findById(id).select('owner');
+      let deletedPost
+      // console.log(user.toString() === post_owner.owner[0]._id.toString())
+      // console.log(user)
+      if (user.toString() === post_owner.owner[0]._id.toString()){
+        deletedPost = await BlogPost.findByIdAndDelete(id)
+        // console.log("deleted Posts")
         if (!deletedPost) {
           return res.status(404).send("Post not found");
       }
       };
-        
-        res.send("Deleted Successfully");
+      // console.log(id)
+        res.send(deletedPost);
     } catch (error) {
         console.error("Error deleting post:", error);
         res.status(500).send("Internal Server Error");

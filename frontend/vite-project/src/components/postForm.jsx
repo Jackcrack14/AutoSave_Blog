@@ -1,15 +1,23 @@
 // PostForm.js
 import React from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const PostForm = ({ formData, onInputChange, onSave }) => {
+  const user = useSelector((state) => state.auth.user)
+  const navigate = useNavigate()
   const handleInputChange = (e) => {
     onInputChange(e.target.name, e.target.value);
   };
-
+  console.log(user)
   const handleSave = () => {
-    onSave(formData);
-  };
+    
 
+      onSave(formData);
+      navigate('/posts')
+    
+  };
+  console.log(user)
   return (
     <div>
       <input

@@ -1,15 +1,20 @@
 // PostList.js
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { deletePost, updatePost } from '../redux/reducers/blogReducer';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { logout } from '../redux/reducers/authReducer';
 
-const PostList = ({ posts }) => {
+const PostView = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate()
+  const {id} = useParams()
+  const posts = useSelector((state) => state.blog.posts)
+  const post = posts.find((p) => p._id === id)
+  console.log(post)
   const user = useSelector((state) => state.auth.user)
 
+ 
   const handleDelete = async (postId) => {
     console.log(postId)
     try {
@@ -35,17 +40,12 @@ const PostList = ({ posts }) => {
       // Handle error, e.g., show an error message to the user
     }
   };
+  const handleEdit = (postId) => {
+    navigate(`/edit/${postId}`)
+  }
   const navigatePost = () => {
     navigate('/posts')
   }
-  const handleEdit = async (postId) => {
-    navigate(`/edit/${postId}`)
-  };
-
-  const handleView = (postId) => {
-    navigate(`/view/${postId}`)
-  }
-  
   const handleLogout = () => {
     navigate('/login')
     dispatch(logout())
@@ -53,28 +53,26 @@ const PostList = ({ posts }) => {
 
   return (
     <div>
-      <h2>Blog Posts</h2>
+      <h2>Post View</h2>
       <button onClick={navigatePost}>Posts</button>
       <ul>
-        {posts.map((post) => (
+        
           <li key={post._id}>
             <h3>{post.title}</h3>
-            {/* <p>{post.content}</p> */}
+            <p>{post.content}</p>
             {/* {console.log(post._id)} */}
             { user._id == post.owner[0] ? <button onClick={() => handleDelete(post._id)}> Delete</button> : null}
             {/* Add an Edit button with a link to the edit route */}
             <Link to={`/edit/${post._id}`}>
             { user._id == post.owner ? <button onClick={() => handleEdit(post._id)}> Edit</button> : null}
             </Link>
-            <Link to={`/view/${post._id}`}>
-                <button onClick={handleView(post._id)}>view</button>
-            </Link>
+            
           </li>
-        ))}
+        
       </ul>
-      {/* <button onClick={handleLogout}>Logout</button> */}
+      <button onClick={handleLogout}>Logout</button>
     </div>
   );
 };
 
-export default PostList;
+export default PostView;

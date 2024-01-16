@@ -5,8 +5,8 @@ const bcrypt = require('bcryptjs')
 
 const registerUser = async (req,res) =>{
     const {name, email, password} = req.body
-    const salt = bcrypt.genSalt(10)
-    const hashedPassword = bcrypt.hash(password,salt)
+    const salt = await bcrypt.genSalt(10)
+    const hashedPassword = await bcrypt.hash(password,salt)
     if(!name || !email || !password){
         res.status(400)
         throw new Error('Enter all the fields')
@@ -16,7 +16,10 @@ const registerUser = async (req,res) =>{
         res.status(400)
         throw new Error('User exists! Please login!')
     }
-    const user = await User.create({name, email, hashedPassword})
+    const user = await new User({name:name, email:email, password:hashedPassword})
+    console.log(hashedPassword)
+    console.log(user)
+    await user.save()
 
     if (user){
         res.status(201).json({
@@ -35,7 +38,9 @@ const registerUser = async (req,res) =>{
 const authUser = async (req,res) =>{
     const {email, password} = req.body
     const user = await User.findOne({email})
-    if(user && (await user.matchPassword(password))){
+    const validPassword = await bcrypt.compare(password, user.password)
+    // console.log(user, validPassword)
+    if(user && validPassword){
         res.status(201).json({
             _id:user._id,
             name:user.name,
