@@ -1,101 +1,39 @@
-body {
-  font-family: 'Roboto', sans-serif;
-  line-height: 1.6;
-  background-color: #f8f8f8;
-  color: #333;
-  margin: 0;
+/* Modal background (overlay) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(0, 0, 0, 0.4); /* Black background with transparency */
 }
 
-.container {
-  max-width: 800px;
-  margin: 0 auto;
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto;
   padding: 20px;
+  border: 1px solid #888;
+  width: 80%; /* Could be adjusted */
+  max-width: 500px;
+  border-radius: 10px;
 }
 
-header {
-  background-color: #3498db;
-  color: #fff;
-  padding: 20px;
-  text-align: center;
+/* Close Button */
+.close-btn {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
-h1 {
-  color: #3498db;
-}
-
-form {
-  margin-bottom: 20px;
-}
-
-input, textarea {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 15px;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  font-size: 16px;
-  color: #333;
-}
-
-input:focus, textarea:focus {
-  outline: none;
-  border-color: #3498db;
-}
-
-button {
-  background-color: #3498db;
-  color: #fff;
-  padding: 12px 20px;
-  border: none;
-  border-radius: 4px;
+.close-btn:hover,
+.close-btn:focus {
+  color: black;
+  text-decoration: none;
   cursor: pointer;
-  font-size: 16px;
-}
-
-button:hover {
-  background-color: #2c87b6;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  margin-bottom: 20px;
-  padding: 20px;
-  border-radius: 4px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-footer {
-  margin-top: 20px;
-  padding: 10px 0;
-  text-align: center;
-  background-color: #3498db;
-  color: #fff;
-}
-
-/* Add the following styles to your existing CSS */
-
-/* Button Styles */
-
-
-/* Add Button Styles */
-.add-button {
-  background-color: #28a745;
-}
-
-.add-button:hover {
-  background-color: #218838;
-}
-
-/* Responsive Design */
-@media (max-width: 600px) {
-  input, textarea, button {
-    width: 100%;
-  }
 }
