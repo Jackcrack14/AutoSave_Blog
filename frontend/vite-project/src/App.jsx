@@ -1,5 +1,5 @@
 // App.js
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,6 +10,7 @@ import {
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "./redux/reducers/blogReducer";
+import { login } from "./redux/reducers/authReducer";
 import PostList from "./components/PostList";
 import AddPost from "./components/AddPost";
 import Home from "./components/Home";
@@ -23,9 +24,19 @@ import { Explore } from "./components/Explore";
 
 const App = () => {
   const dispatch = useDispatch();
-  const backendUrl = import.meta.env.VITEVITE_BACKEND_URL;
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
   const posts = useSelector((state) => state.blog.posts);
   const user = useSelector((state) => state.auth.user);
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user"));
+    if (storedUser) {
+      dispatch(login(storedUser));
+    }
+    setIsLoading(false);
+  }, [dispatch]);
 
   useEffect(() => {
     // Fetch initial posts from the backend
@@ -41,6 +52,10 @@ const App = () => {
 
     fetchPosts();
   }, [dispatch]);
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Optionally show a loading indicator
+  }
 
   return (
     <Router>
@@ -61,8 +76,9 @@ const App = () => {
   );
 };
 const ProtectedRoute = () => {
-  const { isAuthenticated } = useSelector((state) => state.auth.user);
-
+  const user = useSelector((state) => state.auth.user);
+  const { isAuthenticated, email } = user;
+  console.log(isAuthenticated, email);
   return isAuthenticated ? <Outlet /> : <Navigate to="/login" replace />;
 };
 export default App;

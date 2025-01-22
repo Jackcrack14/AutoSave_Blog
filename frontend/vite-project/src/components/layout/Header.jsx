@@ -69,7 +69,7 @@ export function Header() {
                 className="flex items-center focus:outline-none"
               >
                 <img
-                  src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                  src="src/assets/avatar.png"
                   alt="Profile"
                   className="w-8 h-8 rounded-full cursor-pointer ring-2 ring-purple-500 hover:ring-purple-400 transition-colors"
                 />
@@ -80,9 +80,11 @@ export function Header() {
                 <div className="absolute right-0 mt-2 w-48 bg-gray-800 rounded-lg shadow-lg py-1 border border-gray-700 animate-fade-up">
                   <div className="px-4 py-3 border-b border-gray-700">
                     <p className="text-sm text-white font-medium">
-                      {user?.name}
+                      {user?.name || "Guest"}
                     </p>
-                    <p className="text-xs text-gray-400">{user?.email}</p>
+                    <p className="text-xs text-gray-400">
+                      {user?.email || "example@example.com"}
+                    </p>
                   </div>
 
                   <a

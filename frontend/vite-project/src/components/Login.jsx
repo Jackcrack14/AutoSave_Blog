@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Github, Mail } from "lucide-react";
 import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { login } from "../redux/reducers/authReducer";
 import AuthLayout from "../components/auth/AuthLayout";
 import FormInput from "../components/auth/FormInput";
@@ -9,23 +9,28 @@ import SocialButton from "../components/auth/SocialButton";
 import AuthDivider from "../components/auth/AuthDivider";
 
 export default function Login() {
-  const [formData, setFormData] = useState({
-    email: "",
-    password: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const dispatch = useDispatch();
+  const location = useLocation();
   const navigate = useNavigate();
+
+  const validateEmail = (email) => /\S+@\S+\.\S+/.test(email);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Check for empty fields
     if (!formData.email || !formData.password) {
       alert("Please enter both email and password");
       return;
     }
-    console.log(formData, "this is form data");
-    // Perform login request
+    if (!validateEmail(formData.email)) {
+      alert("Please enter a valid email address");
+      return;
+    }
+
+    setIsLoading(true);
     try {
       const response = await fetch("http://localhost:5000/users/login", {
         method: "POST",
@@ -37,13 +42,16 @@ export default function Login() {
       const data = await response.json();
       if (response.ok) {
         dispatch(login(data));
-        navigate("/");
+        const origin = location.state?.from?.pathname || "/";
+        navigate(origin, { replace: true });
       } else {
-        alert(data.message || "Failed to login");
+        setErrorMessage(data.message || "Failed to login");
       }
     } catch (error) {
       console.error("Error during login:", error);
       alert("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -75,6 +83,8 @@ export default function Login() {
           required
         />
 
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+
         <div className="flex items-center justify-between mb-6">
           <label className="flex items-center">
             <input
@@ -90,9 +100,12 @@ export default function Login() {
 
         <button
           type="submit"
-          className="w-full py-2 px-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+          className={`w-full py-2 px-4 ${
+            isLoading ? "bg-gray-400" : "bg-purple-600 hover:bg-purple-700"
+          } text-white rounded-lg transition-colors`}
+          disabled={isLoading}
         >
-          Sign in
+          {isLoading ? "Signing in..." : "Sign in"}
         </button>
 
         <AuthDivider />
