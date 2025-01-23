@@ -6,7 +6,7 @@ const {protect} = require('../middleware/authMiddleware')
 
 router.route('/create').post(protect,createPost);
   
-router.route('/read').get(allPosts);
+router.route('/').get(allPosts);
 
 router.route('/read/:id').get(getPost)
   

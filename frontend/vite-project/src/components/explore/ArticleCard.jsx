@@ -1,9 +1,11 @@
 import React from "react";
 import { Clock, MessageCircle, Bookmark } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 export function ArticleCard({ article }) {
+  const navigate = useNavigate();
   return (
-    <article className="bg-gray-800 rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-300">
+    <article className="bg-gray-800 rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-300" style={{cursor:'pointer'}} onClick={() => navigate(`/blogs/${article?.id}`)}>
       <div className="aspect-[16/9] overflow-hidden">
         <img
           src={article.coverImage}

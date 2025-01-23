@@ -10,8 +10,7 @@ const PostView = () => {
   const navigate = useNavigate()
   const {id} = useParams()
   const posts = useSelector((state) => state.blog.posts)
-  const post = posts.find((p) => p._id === id)
-  console.log(post)
+  const post = posts.find((p) => p.id === Number(id))
   const user = useSelector((state) => state.auth.user)
 
  
@@ -52,24 +51,18 @@ const PostView = () => {
   }
 
   return (
-    <div>
-      <h2>Post View</h2>
-      <button onClick={navigatePost}>Posts</button>
-      <ul>
-        
-          <li key={post._id}>
-            <h3>{post.title}</h3>
+    <div className='flex flex-col justify-center items-center'>
+                
+            <h1>{post.title}</h1>
+            <h2>{post.excerpt}</h2>
             <p>{post.content}</p>
-            {/* {console.log(post._id)} */}
-            { user._id == post.owner[0] ? <button onClick={() => handleDelete(post._id)}> Delete</button> : null}
+            { user._id == post.author.id ? <button onClick={() => handleDelete(post._id)}> Delete</button> : null}
             {/* Add an Edit button with a link to the edit route */}
             <Link to={`/edit/${post._id}`}>
-            { user._id == post.owner ? <button onClick={() => handleEdit(post._id)}> Edit</button> : null}
+            { user._id == post.author.id ? <button onClick={() => handleEdit(post._id)}> Edit</button> : null}
             </Link>
             
-          </li>
-        
-      </ul>
+          
       <button onClick={handleLogout}>Logout</button>
     </div>
   );
