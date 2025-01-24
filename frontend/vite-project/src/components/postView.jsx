@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deletePost, updatePost } from '../redux/reducers/blogReducer';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { logout } from '../redux/reducers/authReducer';
+import MainLayout from './layout/MainLayout';
 
 const PostView = () => {
   const dispatch = useDispatch();
@@ -51,10 +52,13 @@ const PostView = () => {
   }
 
   return (
+    <MainLayout>
+
     <div className='flex flex-col justify-center items-center'>
+      <div className='w-1/2 space-y-10'>
                 
-            <h1>{post.title}</h1>
-            <h2>{post.excerpt}</h2>
+            <h1 className="text-4xl ">{post.title}</h1>
+            <h2 className="text-3xl">{post.excerpt}</h2>
             <p>{post.content}</p>
             { user._id == post.author.id ? <button onClick={() => handleDelete(post._id)}> Delete</button> : null}
             {/* Add an Edit button with a link to the edit route */}
@@ -64,7 +68,9 @@ const PostView = () => {
             
           
       <button onClick={handleLogout}>Logout</button>
+      </div>
     </div>
+    </MainLayout>
   );
 };
 
