@@ -56,9 +56,21 @@ const PostView = () => {
 
     <div className='flex flex-col justify-center items-center'>
       <div className='w-1/2 space-y-10'>
-                
+                <div className='space-y-5'>
+                <div className='space-y-3'>
+
             <h1 className="text-4xl ">{post.title}</h1>
             <h2 className="text-3xl">{post.excerpt}</h2>
+                </div>
+                <div className='flex space-x-5'>
+                <img className='rounded-full object-cover aspect-square w-12 h-12' src={post?.author?.avatar}></img>
+                <div>
+                  <h4>{post?.author?.name}</h4>
+                  <h4>{post?.readTime}</h4>
+                </div>
+                <div></div>
+                </div>
+                </div>
             <p>{post.content}</p>
             { user._id == post.author.id ? <button onClick={() => handleDelete(post._id)}> Delete</button> : null}
             {/* Add an Edit button with a link to the edit route */}
