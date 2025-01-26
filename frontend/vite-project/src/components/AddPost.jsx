@@ -6,10 +6,11 @@ import { addPost, updatePost } from "../redux/reducers/blogReducer";
 import { logout } from "../redux/reducers/authReducer";
 import MainLayout from "../components/layout/MainLayout";
 import { EditorToolbar } from "../components/editor/EditorToolbar";
+import ReactQuill from "react-quill";
 import { CoverImageUpload } from "../components/editor/CoverImageUpload";
 import { TagInput } from "../components/editor/TagInput";
 import { PublishModal } from "../components/editor/PublishModal";
-
+import 'react-quill/dist/quill.snow.css';
 export default function AddPost() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -115,6 +116,14 @@ export default function AddPost() {
     navigate("/");
   };
 
+  const modules = {
+    toolbar: [
+      [{ header: [1, 2, false] }],
+      ['bold', 'italic', 'underline'],
+      ['image', 'code-block']
+    ],
+  };
+
   useEffect(() => {
     return () => {
       debouncedSave.flush();
@@ -142,21 +151,7 @@ export default function AddPost() {
 
           <TagInput tags={tags} onChange={setTags} />
 
-          <EditorToolbar
-            onFormatText={() => {}}
-            onAddLink={() => {
-              const url = prompt("Enter the URL:");
-              if (url) console.log("Add link:", url);
-            }}
-            onAddImage={() => {}} // Implement image insertion logic if needed
-          />
-
-          <textarea
-            placeholder="Tell your story..."
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            className="w-full h-[calc(100vh-600px)] bg-transparent text-gray-300 placeholder-gray-500 border-none focus:outline-none resize-none"
-          />
+          <ReactQuill theme="snow" value={content} onChange={setContent}/>
 
           <div className="flex justify-between items-center mt-6">
             <button

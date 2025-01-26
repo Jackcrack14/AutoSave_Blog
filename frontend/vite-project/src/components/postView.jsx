@@ -65,11 +65,19 @@ const PostView = () => {
                 <div className='flex space-x-5'>
                 <img className='rounded-full object-cover aspect-square w-12 h-12' src={post?.author?.avatar}></img>
                 <div>
-                  <h4>{post?.author?.name}</h4>
-                  <h4>{post?.readTime}</h4>
+                  <h4 className='text-sm'>{post?.author?.name}</h4>
+                  <h6 className='text-xs'>{post?.readTime}</h6>
                 </div>
-                <div></div>
+                <div>
+                  <h4 className='text-sm'>Follow</h4>
+                  <h6 className='text-xs'>{post?.date}</h6>
                 </div>
+                </div>
+                </div>
+                <div>
+                  <figure>
+                    <img src={post?.coverImage}></img>
+                    </figure>
                 </div>
             <p>{post.content}</p>
             { user._id == post.author.id ? <button onClick={() => handleDelete(post._id)}> Delete</button> : null}

@@ -28,7 +28,7 @@ const sampleArticles = [
     title: "The Future of Web Development",
     excerpt:
       "Exploring the latest trends and technologies shaping the web development landscape in 2024 and beyond.",
-      content:"Exploring the latest trends and technologies shaping the web development landscape in 2024 and beyond.",
+      content:"Exploring the latest trends and technologies shaping the web development landscape in 2024 and beyond.Lorem ipsum odor amet, consectetuer adipiscing elit. Curabitur ad vitae libero cras efficitur rhoncus curabitur sapien cursus. Tempus dui ultricies dolor pellentesque himenaeos gravida. Dolor eu varius integer tempus gravida luctus. Natoque eros augue suspendisse aenean malesuada maecenas. Molestie viverra sem neque nostra vulputate ac. Potenti suspendisse nam egestas ac nam diam. Sagittis adipiscing laoreet et taciti penatibus pulvinar",
     author: {
       name: "Sarah Chen",
       avatar:
@@ -45,7 +45,7 @@ const sampleArticles = [
     title: "Mastering TypeScript in 2024",
     excerpt:
       "Essential tips and tricks for becoming a TypeScript expert and writing better code.",
-      content:"Essential tips and tricks for becoming a TypeScript expert and writing better code.",
+      content:"Essential tips and tricks for becoming a TypeScript expert and writing better code.Lorem ipsum odor amet, consectetuer adipiscing elit. Curabitur ad vitae libero cras efficitur rhoncus curabitur sapien cursus. Tempus dui ultricies dolor pellentesque himenaeos gravida. Dolor eu varius integer tempus gravida luctus. Natoque eros augue suspendisse aenean malesuada maecenas. Molestie viverra sem neque nostra vulputate ac. Potenti suspendisse nam egestas ac nam diam. Sagittis adipiscing laoreet et taciti penatibus pulvinar",
     author: {
       name: "Michael Ross",
       avatar:
@@ -62,7 +62,7 @@ const sampleArticles = [
     title: "Design Systems in Practice",
     excerpt:
       "Building scalable and maintainable design systems for modern applications.",
-      content:"Building scalable and maintainable design systems for modern applications",
+      content:"Building scalable and maintainable design systems for modern applicationsLorem ipsum odor amet, consectetuer adipiscing elit. Curabitur ad vitae libero cras efficitur rhoncus curabitur sapien cursus. Tempus dui ultricies dolor pellentesque himenaeos gravida. Dolor eu varius integer tempus gravida luctus. Natoque eros augue suspendisse aenean malesuada maecenas. Molestie viverra sem neque nostra vulputate ac. Potenti suspendisse nam egestas ac nam diam. Sagittis adipiscing laoreet et taciti penatibus pulvinar",
     author: {
       name: "Emma Wilson",
       avatar:
