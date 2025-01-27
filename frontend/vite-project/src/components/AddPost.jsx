@@ -105,7 +105,13 @@ export default function AddPost() {
 
   const handlePublish = async () => {
     setIsPublishing(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500)); // Simulate API call
+    const data = new FormData();
+    formData.append("image",coverImage);
+    formData.append("content",content);
+    formData.append("title",title);
+    formData.append("tags",tags);
+
+    const response = await fetch()
     setIsPublishing(false);
     setIsPublishModalOpen(false);
     navigate("/posts"); // Navigate to the published post
