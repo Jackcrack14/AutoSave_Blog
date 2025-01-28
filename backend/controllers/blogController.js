@@ -4,10 +4,19 @@ const BlogPost = require('../models/BlogPost')
 const createPost = async (req,res) => {
     const { title, content } = req.body;
     console.log('Received data:', title, content);
-    if (title !== undefined && title !== null && title !== ''){
+    
 
-      const newPost = new BlogPost({ title, content, owner:req.user._id });
-      try {
+    try {
+      if (!title?.trim()) {
+        return res.status(400).json({ error: "Title is required" });
+      }
+      
+      if (!content?.trim()) {
+        return res.status(400).json({ error: "Content is required" });
+      }
+      
+      
+      const newPost = new BlogPost({ title: title.trim(), content:content.trim(),image:req.file.buffer, owner:req.user._id });
         await newPost.save();
         console.log('Post saved:', newPost);
     
@@ -16,7 +25,7 @@ const createPost = async (req,res) => {
         console.error('Error saving post:', error);
         res.status(500).send('Internal Server Error');
       }
-    }
+    
 }
 
 
