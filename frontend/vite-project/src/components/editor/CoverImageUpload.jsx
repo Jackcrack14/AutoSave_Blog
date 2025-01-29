@@ -14,7 +14,7 @@ export function CoverImageUpload({ coverImage, onImageUpload, onImageRemove }) {
       {coverImage ? (
         <div className="relative">
           <img
-            src={coverImage}
+            src={coverImage?.preview}
             alt="Cover"
             className="w-full h-64 object-cover rounded-lg"
           />

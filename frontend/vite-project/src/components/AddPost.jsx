@@ -31,7 +31,7 @@ export default function AddPost() {
     return <div>Loading user data...</div>;
   }
   if(loading) {
-    return<div>Loading...</div>
+    return<div>Loading...</div>;
   }
 
   const handleSaveOrPublish = async (isPublishing = false) => {
@@ -41,7 +41,7 @@ export default function AddPost() {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("content", content);
-      formData.append("image", coverImage); // Assuming coverImage is a file or Blob
+      formData.append("image", coverImage?.file); // Assuming coverImage is a file or Blob
       formData.append("tags", JSON.stringify(tags)); // Adjust based on your backend expectations
 
       try {
@@ -77,22 +77,23 @@ export default function AddPost() {
               dispatch(addPost(data));
           }
 
-          navigate("/posts"); // Navigate to the posts page after success
+          navigate("/explore"); // Navigate to the posts page after success
       } catch (error) {
           console.error("Error:", error);
       }finally{
         setLoading(false)
+        setCoverImage(null);
       }
   };
 
   const debouncedSave = debounce(handleSaveOrPublish, 1000);
 
   const handleImageUpload = (file) => {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-          setCoverImage(reader.result);
-      };
-      reader.readAsDataURL(file);
+    const previewUrl = URL.createObjectURL(file);
+      setCoverImage({
+        preview:previewUrl,
+        file:file
+      });
   };
 
   const handleLogout = () => {

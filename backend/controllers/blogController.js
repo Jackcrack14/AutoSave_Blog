@@ -14,7 +14,9 @@ const createPost = async (req,res) => {
       if (!content?.trim()) {
         return res.status(400).json({ error: "Content is required" });
       }
-      
+      if(!req?.file) {
+        return res.status(400).json({error: "Image is required"})
+      }
       
       const newPost = new BlogPost({ title: title.trim(), content:content.trim(),image:req.file.buffer, owner:req.user._id });
         await newPost.save();
