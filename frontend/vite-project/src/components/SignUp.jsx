@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Github, Mail } from "lucide-react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -19,7 +19,17 @@ export default function Signup() {
   const [errors, setErrors] = useState({});
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [preview, setPreview] = useState(null);
+  
+  const fileInputRef = useRef(null);
 
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setPreview(imageUrl);
+    }
+  };
   const validateForm = () => {
     const newErrors = {};
 
@@ -110,6 +120,43 @@ export default function Signup() {
           error={errors.confirmPassword}
           required
         />
+
+<div>
+        {preview && (
+          <img 
+            src={preview} 
+            alt="Avatar Preview" 
+            style={{ width: '100px', height: '100px' }} 
+          />
+        )}
+        
+        <input 
+          type="file" 
+          accept="image/*"
+          className="
+    file:mr-4 
+    file:rounded-full 
+    file:border-0 
+    file:bg-violet-50 
+    file:px-4 
+    file:py-2 
+    file:text-sm 
+    file:font-medium 
+    hover:file:bg-violet-100
+    text-slate-500
+  "
+          ref={fileInputRef}
+          onChange={handleFileUpload}
+          
+        />
+        
+        <button 
+          type="button" 
+          onClick={() => fileInputRef.current.click()}
+        >
+          {preview ? 'Change Avatar' : 'Upload Avatar'}
+        </button>
+      </div>
 
         <div className="mb-6">
           <label className="flex items-center">

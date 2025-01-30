@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 import "../../App.css";
 import { useDispatch, useSelector } from "react-redux";
+import {logout} from '../../redux/reducers/authReducer';
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [avatarMenu, setAvatarMenu] = useState(false);

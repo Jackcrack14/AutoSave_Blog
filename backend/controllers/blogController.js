@@ -33,7 +33,7 @@ const createPost = async (req,res) => {
 
 const allPosts = async (req,res) => {
     try {
-        const posts = await BlogPost.find();
+        const posts = await BlogPost.find().populate('owner','name avatar');
         // console.log('Retrieved posts:', posts);
     
         res.send(posts);

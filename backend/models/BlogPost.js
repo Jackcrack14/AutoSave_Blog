@@ -2,8 +2,10 @@ const mongoose = require('mongoose')
 
 const blogSchema = mongoose.Schema({
     title: {type: String},
+    excerpt:{type:String},
     content: {type: String},
-    image:{type: Buffer},
+    coverImage:{type: Buffer},
+    readTime:{type:String},
     owner:[{type: mongoose.Schema.Types.ObjectId, ref:'User'}]
 })
 

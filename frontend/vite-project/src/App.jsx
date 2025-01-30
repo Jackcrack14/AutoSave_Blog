@@ -96,10 +96,10 @@ const App = () => {
     // Fetch initial posts from the backend
     const fetchPosts = async () => {
       try {
-        // const response = await fetch(backendUrl + "/blogs");
-        // const data = await response.json();
-        // console.log(data, backendUrl)
-        dispatch(setPosts(sampleArticles));
+        const response = await fetch(backendUrl + "/blogs");
+        const data = await response.json();
+        console.log(data, )
+        dispatch(setPosts(data));
       } catch (error) {
         console.error("Error fetching posts:", error.message);
       }

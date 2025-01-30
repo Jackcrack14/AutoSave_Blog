@@ -4,6 +4,11 @@ import { useNavigate } from "react-router-dom";
 
 export function ArticleCard({ article }) {
   const navigate = useNavigate();
+  const {name, avatar} = article?.owner[0];
+  const avatarImage = avatar 
+  ? `data:image/png;base64,${avatar.toString('base64')}` 
+  : null;
+  console.log(avatarImage)
   return (
     <article className="bg-gray-800 rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-300" style={{cursor:'pointer'}} onClick={() => navigate(`/blogs/${article?.id}`)}>
       <div className="aspect-[16/9] overflow-hidden">
@@ -16,12 +21,12 @@ export function ArticleCard({ article }) {
       <div className="p-6">
         <div className="flex items-center space-x-4 mb-4">
           <img
-            src={article.author.avatar}
-            alt={article.author.name}
+            src={avatarImage}
+            alt={name}
             className="w-10 h-10 rounded-full"
           />
           <div>
-            <p className="text-white font-medium">{article.author.name}</p>
+            <p className="text-white font-medium">{name}</p>
             <p className="text-gray-400 text-sm">{article.date}</p>
           </div>
         </div>
