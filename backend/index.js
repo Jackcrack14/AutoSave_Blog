@@ -14,7 +14,7 @@ const corsOptions = {
   origin: [
     "http://localhost:3000",
     "http://localhost:5173",
-    "https://yourdomain.com",
+
     // Add ALL possible origins
   ],
   credentials: true,

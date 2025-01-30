@@ -4,11 +4,16 @@ const bcrypt = require("bcryptjs");
 
 const registerUser = async (req, res) => {
   const { name, email, password } = req.body;
+  const avatar = req.file.buffer;
   const salt = await bcrypt.genSalt(10);
   const hashedPassword = await bcrypt.hash(password, salt);
   if (!name || !email || !password) {
     res.status(400);
     throw new Error("Enter all the fields");
+  }
+  if (!req.file) {
+    res.status(400);
+    throw new Error("File is missing!");
   }
   const userExists = await User.findOne({ email });
   if (userExists) {
@@ -19,8 +24,9 @@ const registerUser = async (req, res) => {
     name: name,
     email: email,
     password: hashedPassword,
+    avatar: req.file.buffer,
   });
-  console.log(hashedPassword);
+
   console.log(user);
   await user.save();
 
@@ -29,7 +35,6 @@ const registerUser = async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      password: user.password,
       token: generateToken(user._id),
     });
   } else {

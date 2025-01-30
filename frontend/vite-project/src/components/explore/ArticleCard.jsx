@@ -4,13 +4,17 @@ import { useNavigate } from "react-router-dom";
 
 export function ArticleCard({ article }) {
   const navigate = useNavigate();
-  const {name, avatar} = article?.owner[0];
-  const avatarImage = avatar 
-  ? `data:image/png;base64,${avatar.toString('base64')}` 
-  : null;
-  console.log(avatarImage)
+  const { name, avatar } = article?.owner[0];
+  const avatarImage = avatar
+    ? `data:image/png;base64,${avatar.toString("base64")}`
+    : null;
+  console.log(avatarImage);
   return (
-    <article className="bg-gray-800 rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-300" style={{cursor:'pointer'}} onClick={() => navigate(`/blogs/${article?.id}`)}>
+    <article
+      className="bg-gray-800 rounded-lg overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-300"
+      style={{ cursor: "pointer" }}
+      onClick={() => navigate(`/blogs/${article?._id}`)}
+    >
       <div className="aspect-[16/9] overflow-hidden">
         <img
           src={article.coverImage}

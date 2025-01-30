@@ -20,14 +20,16 @@ export default function Signup() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [preview, setPreview] = useState(null);
-  
+  const [avatar, setAvatar] = useState(null);
   const fileInputRef = useRef(null);
+  const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
   const handleFileUpload = (event) => {
     const file = event.target.files[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
       setPreview(imageUrl);
+      setAvatar(file);
     }
   };
   const validateForm = () => {
@@ -50,19 +52,25 @@ export default function Signup() {
 
     if (validateForm()) {
       try {
-        const { name, email, password } = formData;
+        const signupData = new FormData();
 
-        const response = await fetch("http://localhost:5000/users/signup", {
+        signupData.append("name", formData.name);
+        signupData.append("email", formData.email);
+        signupData.append("password", formData.password);
+        signupData.append("avatar", avatar);
+
+        // const { name, email, password } = formData;
+
+        const response = await fetch(backendUrl + `/users/signup`, {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ name, email, password }),
+          body: signupData,
         });
 
         const data = await response.json();
 
         if (response.ok) {
           dispatch(registerUser(data));
-          navigate("/posts");
+          navigate("/");
         } else {
           alert(data.message || "Registration failed");
         }
@@ -121,42 +129,51 @@ export default function Signup() {
           required
         />
 
-<div>
-        {preview && (
-          <img 
-            src={preview} 
-            alt="Avatar Preview" 
-            style={{ width: '100px', height: '100px' }} 
-          />
-        )}
-        
-        <input 
-          type="file" 
-          accept="image/*"
-          className="
-    file:mr-4 
-    file:rounded-full 
-    file:border-0 
-    file:bg-violet-50 
-    file:px-4 
-    file:py-2 
-    file:text-sm 
-    file:font-medium 
-    hover:file:bg-violet-100
-    text-slate-500
-  "
-          ref={fileInputRef}
-          onChange={handleFileUpload}
-          
-        />
-        
-        <button 
-          type="button" 
-          onClick={() => fileInputRef.current.click()}
-        >
-          {preview ? 'Change Avatar' : 'Upload Avatar'}
-        </button>
-      </div>
+        <div className="mb-4">
+          <label className="block text-sm font-medium text-gray-400 mb-2">
+            Profile Avatar
+          </label>
+
+          <div className="flex items-center space-x-4">
+            {preview ? (
+              <img
+                src={preview}
+                alt="Avatar Preview"
+                className="w-20 h-20 rounded-full object-cover border-2 border-purple-500"
+              />
+            ) : (
+              <div className="w-20 h-20 rounded-full bg-gray-700 flex items-center justify-center text-gray-400">
+                No Image
+              </div>
+            )}
+
+            <div>
+              <input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                ref={fileInputRef}
+                onChange={handleFileUpload}
+              />
+              <button
+                type="button"
+                onClick={() => fileInputRef.current.click()}
+                className="
+          py-2 
+          px-4 
+          bg-purple-600 
+          hover:bg-purple-700 
+          text-white 
+          rounded-lg 
+          transition-colors 
+          text-sm
+        "
+              >
+                {preview ? "Change Avatar" : "Upload Avatar"}
+              </button>
+            </div>
+          </div>
+        </div>
 
         <div className="mb-6">
           <label className="flex items-center">
