@@ -12,9 +12,9 @@ const PostView = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const posts = useSelector((state) => state.blog.posts);
-  console.log(typeof id);
   const post = posts.find((p) => p._id === id);
   const user = useSelector((state) => state.auth.user);
+  console.log(user._id, post);
 
   const handleDelete = async (postId) => {
     console.log(postId);
@@ -67,10 +67,10 @@ const PostView = () => {
             <div className="flex space-x-5">
               <img
                 className="rounded-full object-cover aspect-square w-12 h-12"
-                src={post?.owner?.avatar}
+                src={post?.owner[0]?.avatar}
               ></img>
               <div>
-                <h4 className="text-sm">{post?.owner?.name}</h4>
+                <h4 className="text-sm">{post?.owner[0]?.name}</h4>
                 <h6 className="text-xs">{post?.readTime}</h6>
               </div>
               <div>
@@ -85,17 +85,25 @@ const PostView = () => {
             </figure>
           </div>
           <div>{parse(post.content)}</div>
-          {user._id == post.owner._id ? (
-            <button onClick={() => handleDelete(post._id)}> Delete</button>
+          {user._id === post.owner[0]._id ? (
+            <button
+              onClick={() => handleDelete(post._id)}
+              className=" py-2 px-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+            >
+              Delete
+            </button>
           ) : null}
           {/* Add an Edit button with a link to the edit route */}
           <Link to={`/edit/${post._id}`}>
-            {user._id == post.owner._id ? (
-              <button onClick={() => handleEdit(post._id)}> Edit</button>
+            {user._id === post.owner[0]._id ? (
+              <button
+                onClick={() => handleEdit(post._id)}
+                className="mx-5 py-2 px-4 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+              >
+                Edit
+              </button>
             ) : null}
           </Link>
-
-          <button onClick={handleLogout}>Logout</button>
         </div>
       </div>
     </MainLayout>
